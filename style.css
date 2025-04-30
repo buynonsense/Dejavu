@@ -1,0 +1,414 @@
+/* --- 基础重置与 Material You 风格变量定义 --- */
+:root {
+  /* 亮色模式 - 示例调色板 (偏紫色系) */
+  --bg-color-light: #fef7ff; /* 背景色 */
+  --text-color-light: #1d1b20; /* 主要文本色 */
+  --text-secondary-light: #49454e; /* 次要文本色 */
+  --surface-light: #fffbff; /* 卡片/表面背景 */
+  --surface-container-light: #f3edf7; /* 容器背景 (略深于表面) */
+  --primary-light: #6750a4; /* 主色调 */
+  --on-primary-light: #ffffff; /* 主色调上的文本色 */
+  --outline-light: #79747e; /* 边框色 */
+  --ripple-color-light: rgba(103, 80, 164, 0.1); /* 点击波纹效果 */
+
+  /* 暗黑模式 - 示例调色板 (偏紫色系) */
+  --bg-color-dark: #141218;
+  --text-color-dark: #e6e0e9;
+  --text-secondary-dark: #cac4cf;
+  --surface-dark: #141218; /* 暗模式下背景和表面可以一致或微调 */
+  --surface-container-dark: #211f26;
+  --primary-dark: #d0bcff;
+  --on-primary-dark: #381e72;
+  --outline-dark: #938f99;
+  --ripple-color-dark: rgba(208, 188, 255, 0.1);
+
+  /* 默认使用亮色 */
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+  --text-secondary: var(--text-secondary-light);
+  --surface: var(--surface-light);
+  --surface-container: var(--surface-container-light);
+  --primary: var(--primary-light);
+  --on-primary: var(--on-primary-light);
+  --outline: var(--outline-light);
+  --ripple-color: var(--ripple-color-light);
+
+  /* 圆角变量 */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 16px;
+  --border-radius-xlarge: 28px;
+  --border-radius-full: 999px; /* 用于圆形按钮等 */
+
+  /* Tabs 相关变量 */
+  --tab-inactive-bg: transparent;
+  --tab-active-bg: var(--surface);
+  --tab-hover-bg: color-mix(in srgb, var(--surface) 50%, transparent);
+  --tab-border-color: var(--outline);
+  --tab-text-color: var(--text-secondary);
+  --tab-active-text-color: var(--primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --surface: var(--surface-dark);
+    --surface-container: var(--surface-container-dark);
+    --primary: var(--primary-dark);
+    --on-primary: var(--on-primary-dark);
+    --outline: var(--outline-dark);
+    --ripple-color: var(--ripple-color-dark);
+    --tab-hover-bg: color-mix(in srgb, var(--surface) 50%, transparent);
+    --tab-active-text-color: var(--primary-dark);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+}
+
+body {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif; /* 优先使用 Roboto */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  /* min-height: 100vh; */ /* Popup不需要100vh */
+  font-size: 16px; /* 基础字号 */
+  padding-bottom: 60px; /* 添加内边距以防止与固定标签重叠，根据需要调整高度 */
+  /* 为弹出窗口设置合理的宽度 */
+  width: 380px; /* 根据需要调整 */
+  /* max-height: 600px; */ /* 可选：如果需要，设置最大高度 */
+  overflow-y: auto; /* 如果内容超出高度，允许滚动 */
+}
+
+/* --- 页头 --- */
+.header {
+  background-color: var(--surface);
+  /* 调整两侧按钮的内边距 */
+  padding: 16px 60px; /* 保持对称内边距 */
+  position: relative; /* 从 sticky 改为 relative 用于 popup */
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* 防止页头收缩 */
+}
+
+.header h1 {
+  font-size: 1.25rem; /* 标题字号 */
+  font-weight: 500; /* 字体粗细 */
+  color: var(--text-color);
+  line-height: 1.4;
+  flex-grow: 1; /* 占据剩余空间以居中 */
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- 通用页头图标按钮样式 --- */
+.header-icon-button {
+  background: none;
+  border: none;
+  color: var(--primary); /* 使用主色调 */
+  cursor: pointer;
+  padding: 8px; /* 内边距 */
+  border-radius: var(--border-radius-full); /* 全圆角 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease; /* 背景色过渡效果 */
+  position: absolute; /* 在页头内绝对定位 */
+  top: 50%;
+  transform: translateY(-50%); /* 垂直居中 */
+}
+.header-icon-button:hover {
+  background-color: var(--ripple-color); /* 悬停背景色 */
+}
+.header-icon-button .material-symbols-outlined {
+  font-size: 24px; /* 图标大小 */
+}
+
+/* 绘画按钮的特定位置 */
+.draw-button {
+  left: 16px; /* 定位在左侧 */
+}
+
+/* 导入按钮容器的特定位置 */
+.header-actions {
+  position: absolute;
+  top: 50%;
+  right: 16px; /* 定位在右侧 */
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+/* 如果需要，调整导入按钮（已间接使用 header-icon-button） */
+.import-button-small {
+  position: static; /* 如果使用 header-actions，移除绝对定位 */
+  transform: none;
+}
+
+/* --- 绘画覆盖层 --- */
+.drawing-overlay {
+  display: none; /* 初始隐藏 */
+  position: fixed; /* 保持固定以覆盖视口 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* 白色背景 */
+  z-index: 1000; /* 高 z-index 以覆盖所有内容 */
+  touch-action: none; /* 阻止默认触摸操作，如滚动 */
+}
+
+#drawing-canvas {
+  display: block; /* 移除 canvas 下方的额外空间 */
+  width: 100%;
+  height: 100%;
+  cursor: crosshair; /* 指示绘画能力 */
+}
+
+/* 绘画覆盖层的关闭按钮 */
+.close-draw-button {
+  position: absolute; /* 在覆盖层内定位 */
+  top: 16px;
+  right: 16px;
+  z-index: 1001; /* 在 canvas 之上 */
+}
+.close-draw-button:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* 悬停效果 */
+}
+
+/* --- 主要内容区 --- */
+.main-content {
+  flex-grow: 1; /* 占据剩余垂直空间 */
+  padding: 16px;
+  display: flex; /* 使用 flex 布局 */
+  flex-direction: column; /* 垂直堆叠子元素 */
+  overflow-y: auto; /* 如果内容溢出，允许垂直滚动 */
+}
+
+/* --- 顶部内容区域 --- */
+.top-content-area {
+  /* flex-grow: 1; */ /* 移除 flex-grow 以防止过多地向下推导航 */
+  min-height: 50px; /* 减小最小高度 */
+  display: flex; /* 可选：如果想在内部居中内容 */
+  flex-direction: column;
+  justify-content: center; /* 可选：示例居中 */
+  flex-shrink: 0; /* 防止收缩 */
+}
+
+/* --- 底部内容区域 (包含导航) --- */
+.bottom-content-area {
+  flex-shrink: 0; /* 防止此区域收缩 */
+  margin-top: 16px; /* 在顶部和底部区域之间添加空间 */
+  overflow: hidden; /* 添加此项以裁剪滑动内容 */
+  position: relative; /* 如果内部需要绝对定位，则需要此项 */
+}
+
+/* --- 标签容器 (固定底部) --- */
+.tabs-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 调整间距 */
+  position: fixed; /* 固定到视口 */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--surface); /* 添加背景 */
+  border-top: 1px solid var(--outline); /* 保留顶部边框 */
+  border-bottom: none; /* 移除底部边框 */
+  padding: 8px 16px 8px 16px; /* 调整内边距 */
+  margin-top: 0; /* 移除顶部外边距 */
+  z-index: 10; /* 确保它在其他内容之上 */
+  margin-bottom: 0;
+  padding-bottom: 8px; /* 如果内部内容需要，重新添加底部内边距 */
+  padding-top: 8px;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1); /* 可选阴影 */
+  overflow-x: auto; /* 允许许多标签水平滚动 */
+  -webkit-overflow-scrolling: touch; /* iOS 上的平滑滚动 */
+  scrollbar-width: none; /* 隐藏 Firefox 的滚动条 */
+  width: 100%; /* 确保它跨越弹出窗口宽度 */
+}
+.tabs-container::-webkit-scrollbar {
+  display: none; /* 隐藏 Chrome, Safari, Edge 的滚动条 */
+}
+
+.tab {
+  padding: 8px 16px; /* 调整内边距 */
+  font-size: 0.9rem; /* 字体大小 */
+  font-weight: 500; /* 字体粗细 */
+  color: var(--tab-text-color); /* 文本颜色 */
+  background-color: var(--tab-inactive-bg); /* 背景色 */
+  border: none; /* 无边框 */
+  border-radius: var(--border-radius-medium); /* 圆角 */
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap; /* 防止标签文本换行 */
+  position: relative;
+  border-top: none; /* 移除顶部边框指示器 */
+  border-bottom: 2px solid transparent; /* 再次使用底部指示器 */
+}
+
+.tab:hover {
+  background-color: var(--tab-hover-bg); /* 悬停背景色 */
+}
+
+.tab.active {
+  color: var(--tab-active-text-color); /* 活动标签文本颜色 */
+  border-top-color: transparent; /* 移除顶部活动指示器 */
+  border-bottom-color: var(--primary); /* 使用底部活动指示器 */
+}
+
+.add-tab-button {
+  background: none;
+  border: none;
+  color: var(--primary); /* 使用主色调 */
+  cursor: pointer;
+  padding: 6px; /* 内边距 */
+  margin-left: 8px; /* 与最后一个标签的间距 */
+  border-radius: var(--border-radius-full); /* 全圆角 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease; /* 背景色过渡 */
+}
+.add-tab-button:hover {
+  background-color: var(--ripple-color); /* 悬停背景色 */
+}
+.add-tab-button .material-symbols-outlined {
+  font-size: 20px; /* 图标大小 */
+}
+
+/* --- 快速导航区域 --- */
+.quick-nav-section {
+  background-color: var(--surface-container); /* 使用容器背景色 */
+  border-radius: var(--border-radius-large); /* 更大的圆角 */
+  padding: 16px;
+  margin-bottom: 0; /* 确保底部没有额外边距 */
+}
+
+.quick-nav-section h2 {
+  display: none; /* 隐藏静态标题 */
+}
+
+.quick-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(80px, 1fr)
+  ); /* 稍微增大最小宽度 */
+  gap: 12px; /* 调整网格间距 */
+  min-height: 70px; /* 最小高度，防止空内容时塌陷 */
+  margin-bottom: 0; /* 移除底部外边距，因为标签现在在下面 */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* 滑动动画过渡 */
+  will-change: transform, opacity; /* 性能优化提示 */
+}
+
+/* 动画类 */
+.quick-nav-grid.slide-out-left {
+  transform: translateX(-100%); /* 向左滑出 */
+  opacity: 0;
+}
+.quick-nav-grid.slide-out-right {
+  transform: translateX(100%); /* 向右滑出 */
+  opacity: 0;
+}
+.quick-nav-grid.slide-from-right {
+  transform: translateX(100%); /* 从右侧滑入的初始状态 */
+  opacity: 0;
+  transition: none; /* 初始状态无过渡 */
+}
+.quick-nav-grid.slide-from-left {
+  transform: translateX(-100%); /* 从左侧滑入的初始状态 */
+  opacity: 0;
+  transition: none; /* 初始状态无过渡 */
+}
+
+/* 导航项占位符 */
+.nav-placeholder {
+  grid-column: 1 / -1; /* 占据整行 */
+  text-align: center;
+  color: var(--text-secondary); /* 次要文本色 */
+  font-size: 0.9rem;
+  padding: 16px 0;
+}
+
+/* 实际导航项样式 (Material You 风格) */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 4px; /* 内边距 */
+  background-color: var(--surface); /* 使用表面颜色 */
+  border-radius: var(--border-radius-medium); /* 中等圆角 */
+  text-align: center;
+  text-decoration: none; /* 移除链接下划线 */
+  color: var(--text-color); /* 文本颜色 */
+  font-size: 0.8rem; /* 稍小字体 */
+  transition: background-color 0.2s ease; /* 背景色过渡 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  word-break: break-word; /* 优化长单词换行 */
+  position: relative; /* 用于波纹效果 */
+  cursor: pointer;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--ripple-color); /* 波纹颜色 */
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.nav-item:active::after {
+  transition: transform 0.3s ease-out, opacity 0.4s ease-out;
+  opacity: 1;
+  transform: scale(20) translate(-50%, -50%); /* 控制波纹扩散范围 */
+}
+
+.nav-item i,
+.nav-item .material-symbols-outlined {
+  font-size: 20px; /* Material Symbols 推荐大小 - 减小尺寸 */
+  margin-bottom: 4px; /* 图标和文字间距 */
+  color: var(--primary); /* 图标使用主色调 */
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20; /* 调整 opsz 匹配 font-size */
+  line-height: 1; /* 确保图标垂直居中 */
+}
+
+/* 新增：限制导航项中图片图标的大小 */
+.nav-item img {
+  width: 20px; /* 设置统一宽度 */
+  height: 20px; /* 设置统一高度 */
+  margin-bottom: 4px; /* 与文字图标保持一致的底部间距 */
+  object-fit: contain; /* 保持图片比例，避免拉伸 */
+  vertical-align: middle; /* 尝试垂直居中对齐 */
+}
+
+.nav-item span {
+  display: block; /* 如果需要，也可以是 inline-block，这里 block 没问题 */
+  line-height: 1.3; /* 行高 */
+  font-size: 0.75rem; /* 字体大小 */
+  color: var(--text-secondary); /* 次要文本色 */
+  width: 100%; /* 确保 span 占据其容器的全部宽度 */
+  padding: 0 2px; /* 如果需要，添加轻微的水平内边距 */
+
+  /* --- 添加这些属性用于省略号 --- */
+  white-space: nowrap; /* 防止文本换行 */
+  overflow: hidden; /* 隐藏溢出文本 */
+  text-overflow: ellipsis; /* 显示省略号 (...) */
+}

@@ -1,0 +1,27 @@
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.suo
+*.user
+*.swp
+
+# 日志文件
+*.log
+
+# 依赖目录（如使用 npm/yarn 时）
+node_modules/
+
+# 打包产物
+*.zip
+*.crx
+
+# 可选：本地存储或导出文件
+# 导出的导航 JSON （如不想提交）
+dejavu-navigation.json
+
+# 环境变量
+.env

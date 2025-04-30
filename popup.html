@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dejavu 导航</title>
+    <!-- Material 图标库 -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Roboto 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- 链接到外部 CSS 文件 -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <!-- 绘画触发按钮 (左上角) -->
+      <button
+        id="draw-btn"
+        class="header-icon-button draw-button"
+        title="快速绘画"
+      >
+        <span class="material-symbols-outlined">draw</span>
+      </button>
+
+      <h1>Dejavu</h1>
+
+      <!-- 导入按钮 (右上角) -->
+      <div class="header-actions">
+        <input
+          type="file"
+          id="import-file-input"
+          accept=".json"
+          style="display: none"
+        />
+        <button
+          id="import-nav-btn"
+          class="header-icon-button import-button-small"
+          title="导入快速导航"
+        >
+          <span class="material-symbols-outlined">upload</span>
+        </button>
+        <button
+          id="export-nav-btn"
+          class="header-icon-button import-button-small"
+          title="导出快速导航"
+        >
+          <span class="material-symbols-outlined">download</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- 其他内容区域 (名言, iframe 等) -->
+      <div class="top-content-area">
+        <!-- 名言占位符 -->
+        <p
+          id="quote-display"
+          style="
+            text-align: center;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 0.9em;
+          "
+        >
+          <!-- 名言将由 JS 加载到此处 -->
+        </p>
+      </div>
+
+      <!-- 导航区域 -->
+      <div class="bottom-content-area">
+        <section class="quick-nav-section">
+          <!-- 快速导航网格 -->
+          <div class="quick-nav-grid" id="quick-nav-container">
+            <!-- 如果需要，占位符将由 JS 添加 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 标签容器 (固定在底部) -->
+    <div class="tabs-container" id="tabs-container">
+      <!-- 标签将由 JS 添加 -->
+      <button class="add-tab-button" id="add-tab-btn" title="添加分组">
+        <span class="material-symbols-outlined">add</span>
+      </button>
+    </div>
+
+    <!-- 绘画覆盖层 (初始隐藏) -->
+    <div id="drawing-overlay" class="drawing-overlay">
+      <canvas id="drawing-canvas"></canvas>
+      <button
+        id="close-draw-btn"
+        class="header-icon-button close-draw-button"
+        title="关闭绘画"
+      >
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- 链接到外部 JS 文件 -->
+    <script src="popup.js"></script>
+  </body>
+</html>
